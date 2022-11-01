@@ -12,13 +12,13 @@ Library of interpolation functions. Includes the following.
 - Squared Easing In/Out
 All functions allow overriding for 2D and 3D vectors.
 Sources:
--https://en.wikipedia.org/wiki/Hermite_interpolation
--https://en.wikipedia.org/wiki/Polynomial_interpolation
+- https://en.wikipedia.org/wiki/Hermite_interpolation
+- https://en.wikipedia.org/wiki/Polynomial_interpolation
 ## White Noise
 Library of white noise and pseudo-random number functions
 Sources:
--https://www.ronja-tutorials.com/post/024-white-noise/
+- https://www.ronja-tutorials.com/post/024-white-noise/
 ## Value Noise
 Library of value noise functions, for usage when a perlin-like noise function is required.
 Sources:
--https://www.ronja-tutorials.com/post/025-value-noise/
+- https://www.ronja-tutorials.com/post/025-value-noise/
