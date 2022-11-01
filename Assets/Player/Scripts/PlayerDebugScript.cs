@@ -14,7 +14,7 @@ using UnityEngine;
 
     Dependencies
         -PlayerScript
-        -PlayerInteractionScript
+        -PlayerInteraction
 ----------------------------------------------------------------------------------------------------------------------------------------------*/
 
 public class PlayerDebugScript : MonoBehaviour {
@@ -24,11 +24,11 @@ public class PlayerDebugScript : MonoBehaviour {
     public bool printInteracteeStay;
 
     PlayerScript player;
-    PlayerInteractionScript interaction;
+    PlayerInteraction interaction;
 
     void Start() {
         player = gameObject.GetComponent<PlayerScript>();
-        interaction = gameObject.GetComponent<PlayerInteractionScript>();
+        interaction = gameObject.GetComponent<PlayerInteraction>();
     }
 
     void Update() {

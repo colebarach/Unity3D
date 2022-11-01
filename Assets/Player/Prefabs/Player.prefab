@@ -296,14 +296,15 @@ MonoBehaviour:
   jumpHeight: 0
   cameraSensitivity: 3
   gravity: -9.81
-  playerMask:
+  colliders:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1
   mainCamera: {fileID: 8502811843183463400}
   collisionDetector: {fileID: 8502811843462369802}
   playerController: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   velocityAdditive: {x: 0, y: 0, z: 0}
+  velocityDamper: 1
   grounded: 0
   mouseLock: 1
 --- !u!114 &1622588018
@@ -315,10 +316,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8502811843245931209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ee87ad488e9cdd42a308b758790b7d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 3274055e3656eb740bdc8891600baa69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 1.5
+  maxDistance: 2.5
   interactee: {fileID: 0}
   interacteeStay: {fileID: 0}
 --- !u!1 &8502811843462369800

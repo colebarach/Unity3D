@@ -24,16 +24,17 @@ public class PlayerScript : MonoBehaviour {
 	public float cameraSensitivity =    3.00f;
 	[Header("Physics")]
 	public float gravity =             -9.81f;
-	public LayerMask playerMask;
+	public LayerMask colliders;
 	[Header("References")]
 	public Camera mainCamera;
 	public SphereCollider collisionDetector;
 	
 	[HideInInspector]public CharacterController playerController;
-	[HideInInspector]public Vector3 velocity;
-    [HideInInspector]public Vector3 velocityAdditive;
-	[HideInInspector]public bool grounded;
-	[HideInInspector]public bool mouseLock = true;
+	[HideInInspector]public Vector3 velocity            = Vector3.zero;
+    [HideInInspector]public Vector3 velocityAdditive    = Vector3.zero;
+    [HideInInspector]public float   velocityDamper      = 1.0f;
+	[HideInInspector]public bool    grounded            = false;
+	[HideInInspector]public bool    mouseLock           = true;
 
 	void Start() {
 		playerController = GetComponent<CharacterController>();
@@ -47,7 +48,7 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 	public void CalculateGravity() {
-		grounded = Physics.CheckSphere(collisionDetector.transform.position, collisionDetector.radius, ~playerMask, QueryTriggerInteraction.Ignore);
+		grounded = Physics.CheckSphere(collisionDetector.transform.position, collisionDetector.radius, colliders, QueryTriggerInteraction.Ignore);
 		if(Input.GetButtonDown("Jump") && grounded) velocity.y = Mathf.Sqrt(-2*jumpHeight*gravity);
 		if(grounded && velocity.y <= 0) {
 			velocity.y = -0.1f;
@@ -65,11 +66,7 @@ public class PlayerScript : MonoBehaviour {
 		}
 		velocityRaw.x *= walkSpeed;
 		velocity = velocityRaw.x*transform.right + velocity.y*transform.up + velocityRaw.z*transform.forward;
-		if(velocityAdditive != Vector3.zero) {
-            velocity.y = 0;
-        }
-        playerController.Move(velocity*Time.deltaTime + velocityAdditive);
-        velocityAdditive = Vector3.zero;
+        playerController.Move(velocity*velocityDamper*Time.deltaTime);
 	}
 	public void RotateCamera() {
 		if(mouseLock) {
@@ -103,4 +100,15 @@ public class PlayerScript : MonoBehaviour {
 	float EulerUnsignedToSigned(float rotation) {
 		return (rotation+180)%360 -180;
 	}
+
+    public void ForceLook(Vector3 target, float strength) {
+        Vector3 offset = target - mainCamera.transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(offset,transform.up);
+        Quaternion newRotation = Quaternion.Slerp(mainCamera.transform.rotation,targetRotation,strength*Time.deltaTime);
+        mainCamera.transform.localEulerAngles = new Vector3(newRotation.eulerAngles.x,0,0);
+        transform.localEulerAngles = new Vector3(0,newRotation.eulerAngles.y,0);
+    }
+    public void ForceStop(float strength) {
+        velocityDamper = Mathf.Pow(2,-strength);
+    }
 }
