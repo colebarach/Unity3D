@@ -3,31 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteAlways]
+/*----------------------------------------------------------------------------------------------------------------------------------------------
+  UI Display Script
+	
+	Author -  Cole Barach
+	Created - 2022.09.05
+	Updated - 2022.09.06
+	
+	Function
+		-Display of Image to UI
+
+    Dependencies
+----------------------------------------------------------------------------------------------------------------------------------------------*/
+
 public class UiDisplayScript : MonoBehaviour {
     [Header("Image")]
     public Texture image;
-    public Color imageColor;
-    public float imageScale;
-    [Header("Container")]
-    public Color containerColor;
-    
-    RawImage imageObject;
-    RawImage container;
+    public Color   imageColor;
+    public float   imageScale;
+    [Header("Backdrop")]
+    public Color   backdropColorActive;
+    public Color   backdropColorPassive;
+    [Header("References")]
+    public RawImage uiImage;
+    public RawImage uiBackdrop;
 
     void Start() {
-        imageObject = transform.GetChild(0).GetComponent<RawImage>();
-        container = GetComponent<RawImage>();
+        if(uiImage    == null) uiImage    = transform.GetChild(0).GetComponent<RawImage>();
+        if(uiBackdrop == null) uiBackdrop = GetComponent<RawImage>();
     }
 
     void Update() {
-        imageObject.texture = image;
-        imageObject.color = imageColor;
-        imageObject.rectTransform.sizeDelta = GetScale();
+        uiImage.texture = image;
+        uiImage.color   = imageColor;
+        uiImage.rectTransform.sizeDelta = GetScale();
         if(image == null) {
-            container.color = Color.clear;
+            uiBackdrop.color = backdropColorPassive;
         } else {
-            container.color = containerColor;
+            uiBackdrop.color = backdropColorActive;
         }
     }
 

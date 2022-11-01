@@ -1,0 +1,6 @@
+# Behavior Package
+This package contains the scripting for any objects with animate behavior. Objects in this package should only have a single script, which contains all the necessary interfacing functions and variables for said object. Any interaction between these objects and those of another package requires an intermediate script. An example of this is given below.
+## Rotating Door
+- **BehaviorDoor.cs** - This script is responsible for containing the information about any rotating door. Applying this script to a object will make it behave as a door.
+- **ProgressBehaviorDoor.cs** - This script belongs to the progress package, and is responsible for updating the state of a door based on the current story progress. An example of this would be a door automatically unlocking when the player collects a key for it. 
+- **InteractionBehaviorDoor.cs** - This script belongs to the player package, and is responsible for updating the state of a door based on the player interaction. An example of this would be the player interacting with a door and the door opens.
