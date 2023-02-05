@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------
-  	Behavior Door
+  	Behavior Slidiing Door
 
   	Author -  Cole Barach
   	Created - 2020.05.28
   	Updated - 2022.09.17
 
   	Function
-    	- Reads interactedObject variable of PlayerInteraction for changes
-		- Calls Transform.Rotate on attached object to match targeted rotation
-		
-	Dependencies
-	    - PlayerInteraction
-        - GlobalFunctions
+		- Calls Transform.Translate on attached object to match targeted position
 ----------------------------------------------------------------------------------------------------------------------------------------------*/
 
 public class BehaviorSlidingDoor : MonoBehaviour {

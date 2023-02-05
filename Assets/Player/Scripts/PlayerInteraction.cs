@@ -27,8 +27,14 @@ public class PlayerInteraction : MonoBehaviour {
 		mainCamera = Camera.main;
 	}
 	void Update() {
-			if(Input.GetMouseButtonDown(0)) interactee = GetInteractee();
-			if(Input.GetMouseButton(0)) interacteeStay = GetInteractee();
+			if(Input.GetMouseButtonDown(0)) {
+                interactee = GetInteractee();
+            }
+			if(Input.GetMouseButton(0)) {
+                interacteeStay = GetInteractee();
+            } else {
+                interacteeStay = null;
+            }
 	}
 	public GameObject GetInteractee() {
 			Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
@@ -42,4 +48,8 @@ public class PlayerInteraction : MonoBehaviour {
 		if(interacted) interactee = null;
 		return interacted;
 	}
+    public bool CheckInteracteeStay(GameObject subject) {
+        bool interacted = interacteeStay == subject;
+        return interacted;
+    }
 }

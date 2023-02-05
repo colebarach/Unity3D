@@ -28,7 +28,7 @@ public class ProgressMaster : MonoBehaviour {
         }
     }
 
-    public void ProgressIncrement() {
+    public void progressIncrement() {
         progress++;
     }
 

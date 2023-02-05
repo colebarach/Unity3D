@@ -7,15 +7,10 @@ using UnityEngine;
 
   	Author -  Cole Barach
   	Created - 2020.05.28
-  	Updated - 2022.09.22
+  	Updated - 2022.12.26
 
   	Function
-    	- Reads interactedObject variable of PlayerInteraction for changes
 		- Calls Transform.Rotate on attached object to match targeted rotation
-		
-	Dependencies
-	    - PlayerInteraction
-        - GlobalFunctions
 ----------------------------------------------------------------------------------------------------------------------------------------------*/
 
 public class BehaviorDoor : MonoBehaviour {
@@ -55,40 +50,37 @@ public class BehaviorDoor : MonoBehaviour {
 	}
 	float GetTorque() {
         // Default closed
-		float currentRotation = EulerTransformPole(GetAngle(),closedRotation);
+		float currentRotation = EulerTransformPole(GetAngle(), closedRotation);
 		float targetRotation = closedRotation;
         // Check if open
 		if(open) targetRotation = openRotation;
 		
         // Check angle to travel
 		float rotationOffset = targetRotation-currentRotation;
-		float torque = 0;
-		
+	
         // Check to see if door has reached epsilon
 		if(Mathf.Abs(rotationOffset) < rotationEpsilon) {
-			torque = 0;
+			return 0;
 		} else {
-			torque = Mathf.Sign(rotationOffset)*angularVelocity*Time.deltaTime;
+			return Mathf.Sign(rotationOffset)*angularVelocity*Time.deltaTime;
 		}
-		return torque;
 	}
 	float GetAngle() {
         return Vector3.Scale(transform.localEulerAngles,hingeAxis.normalized).magnitude;
     }
     public void Rotate(float torque) {
-        if(torque != 0) {
-            Vector3 offset;
-            if(torque > 0) {
-                Vector3 colliderCenter = boxCollider.center + positiveColliderOffset;
-                offset = colliderCenter.x*transform.right + colliderCenter.y*transform.up + colliderCenter.z*transform.forward;
-            } else {
-                Vector3 colliderCenter = boxCollider.center + negativeColliderOffset;
-                offset = colliderCenter.x*transform.right + colliderCenter.y*transform.up + colliderCenter.z*transform.forward;
-            }
-            if(!Physics.CheckBox(transform.position+offset,boxCollider.size/2,transform.rotation,obstacleMask)) {
-                transform.localEulerAngles += hingeAxis*torque;
-			}
-		}
+        if(torque == 0) return;
+        Vector3 offset;
+        if(torque > 0) {
+            Vector3 colliderCenter = boxCollider.center + positiveColliderOffset;
+            offset = colliderCenter.x*transform.right + colliderCenter.y*transform.up + colliderCenter.z*transform.forward;
+        } else {
+            Vector3 colliderCenter = boxCollider.center + negativeColliderOffset;
+            offset = colliderCenter.x*transform.right + colliderCenter.y*transform.up + colliderCenter.z*transform.forward;
+        }
+        if(!Physics.CheckBox(transform.position+offset,boxCollider.size/2,transform.rotation,obstacleMask)) {
+            transform.localEulerAngles += hingeAxis*torque;
+        }
 	}
     
     static float EulerUnsignedToSigned(float theta) {
